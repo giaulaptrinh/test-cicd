@@ -35,4 +35,4 @@ jobs:
         run: 'echo "Commit author: ${{ github.event.head_commit.author.name }}"'
 
       - run: npm install
-      - run: npm run start
+      - run: node dist/index.js
