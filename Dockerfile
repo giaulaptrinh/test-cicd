@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:20
+FROM node:22
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the application
-CMD ["node", "dist/index"]
+CMD ["node", "dist/index.js"]
