@@ -31,5 +31,5 @@ jobs:
             cd /root/test-cicd
             git pull origin main
             npm install
-            npm start --name "test-cicd-github-action"
+            docker-compose up --build -d
           EOF
