@@ -30,6 +30,6 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@157.230.253.196 << 'EOF'
             cd /root/test-cicd
             git pull origin main
-            npm install
+            docker-compose down || true
             docker-compose up --build -d
           EOF
