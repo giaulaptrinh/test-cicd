@@ -1,35 +1,35 @@
-name: Deploy to DigitalOcean test ci cd github action
+# name: Deploy to DigitalOcean test ci cd github action
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    name: SSH Deploy to Droplet
-    runs-on: ubuntu-22.04
+# jobs:
+#   deploy:
+#     name: SSH Deploy to Droplet
+#     runs-on: ubuntu-22.04
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      - name: Install SSH client
-        run: sudo apt-get update && sudo apt-get install -y openssh-client
+#       - name: Install SSH client
+#         run: sudo apt-get update && sudo apt-get install -y openssh-client
 
-      - name: Setup SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-      - name: Test SSH to stagging
-        run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@157.230.253.196 "echo '✅ SSH OK'"
-      - name: Deploy via SSH
-        run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@157.230.253.196 << 'EOF'
-            cd /root/test-cicd
-            git pull origin main
-            docker-compose down || true
-            docker-compose up --build -d
-          EOF
+#       - name: Setup SSH key
+#         run: |
+#           mkdir -p ~/.ssh
+#           echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+#           chmod 600 ~/.ssh/id_ed25519
+#       - name: Test SSH to stagging
+#         run: |
+#           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@157.230.253.196 "echo '✅ SSH OK'"
+#       - name: Deploy via SSH
+#         run: |
+#           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@157.230.253.196 << 'EOF'
+#             cd /root/test-cicd
+#             git pull origin main
+#             docker-compose down || true
+#             docker-compose up --build -d
+#           EOF
