@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    credentialsId: 'Github-Token-Lab306',
+                    credentialsId: 'Github-Token-Lab3.06',
                     url: 'https://github.com/giaulaptrinh/test-cicd.git'
             }
         }
