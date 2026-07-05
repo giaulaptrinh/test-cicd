@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test SSH') {
             steps {
-                sshagent(credentials: ['droplet-ssh-key']) {
+                sshagent(credentials: ['SSH-key-giaulee']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} \
                         "echo '✅ SSH OK'"
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sshagent(credentials: ['droplet-ssh-key']) {
+                sshagent(credentials: ['SSH-key-giaulee']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} << EOF
                         cd /root/test-cicd
