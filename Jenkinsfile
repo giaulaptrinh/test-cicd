@@ -17,7 +17,7 @@ pipeline {
 
         stage('Test SSH') {
             steps {
-                sshagent(credentials: ['SSH-key-giaulee']) {
+                sshagent(credentials: ['SSH-key-giaulee1']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} \
                         "echo '✅ SSH OK'"
@@ -28,14 +28,18 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sshagent(credentials: ['SSH-key-giaulee']) {
+                sshagent(credentials: ['SSH-key-giaulee1']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} << EOF
-                        cd /root/test-cicd
-                        git pull origin main
-                        docker-compose down || true
-                        docker-compose up --build -d
-                        EOF
+                        ssh -o StrictHostKeyChecking=no ${USER}@${SERVER} '
+                            cd /root/test-cicd &&
+                            git pull origin main &&
+
+                            docker-compose down || true
+
+                            docker rm -f nest-docker mongodb || true
+
+                            docker-compose up --build -d
+                        '
                     """
                 }
             }
